@@ -4,12 +4,13 @@ import { add } from '../store/content';
 import { setChoices, Choice } from '../store/choices';
 import inkStory from './inkStory';
 import { AnyAction } from '@reduxjs/toolkit';
+import md5 from 'md5';
 
 const updateContent = (dispatch: Dispatch<AnyAction>) => {
 	while (inkStory.canContinue) {
-		const content = inkStory.Continue();
-		if (content === null) continue; // It won't be, because we test this at the top of the while loop, but TS doesn't know that
-		dispatch(add(content));
+		const text = inkStory.Continue();
+		if (text === null) continue; // It won't be, because we test this at the top of the while loop, but TS doesn't know that
+		dispatch(add({ text, index: md5(text) }));
 		// processTags(inkStory.currentTags);
 	}
 	const choices: Choice[] = inkStory.currentChoices.map(choice => {

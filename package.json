@@ -19,6 +19,7 @@
 		"@babel/preset-env": "^7.17.10",
 		"@babel/preset-react": "^7.16.7",
 		"@babel/preset-typescript": "^7.16.7",
+		"@types/md5": "^2.3.2",
 		"@types/react": "^18.0.9",
 		"@types/react-dom": "^18.0.3",
 		"@types/webpack": "^5.28.0",
@@ -37,6 +38,7 @@
 	"dependencies": {
 		"@reduxjs/toolkit": "^1.8.1",
 		"inkjs": "^2.0.0",
+		"md5": "^2.3.0",
 		"react": "^18.1.0",
 		"react-dom": "^18.1.0",
 		"react-redux": "^8.0.1"

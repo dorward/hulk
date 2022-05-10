@@ -12,8 +12,8 @@ const App = () => {
 		<>
 			<h1>Hulk</h1>
 			<div id="story">
-				{contentState.content.map(string => (
-					<p>{string}</p>
+				{contentState.content.map(content => (
+					<p key={content.index}>{content.text}</p>
 				))}
 			</div>
 			<div id="choices">
