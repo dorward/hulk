@@ -12,7 +12,7 @@ Check the code out from Git.
 
 Run `npm install` in the project directory.
 
-Then run `npm srun start` to run the development server.
+Then run `npm run start` to run the development server.
 
 ## Contributing
 
