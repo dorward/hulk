@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export type Choice = {
 	text: string;
+	index: number;
 };
 
 export interface ChoiceState {
