@@ -5,13 +5,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
 	entry: {
 		app: './src/index.tsx',
-
-		// Runtime code for hot module replacement
-		hot: 'webpack/hot/dev-server.js',
-		// Dev server client for web socket transport, hot and live reload logic
-		client: 'webpack-dev-server/client/index.js?hot=true&live-reload=true',
 	},
-	devtool: 'inline-source-map',
 	module: {
 		rules: [
 			{
@@ -44,14 +38,7 @@ module.exports = {
 		filename: '[name].js',
 		path: path.resolve(__dirname, 'dist'),
 	},
-	devServer: {
-		static: './dist',
-		// Dev server client for web socket transport, hot and live reload logic
-		hot: false,
-		client: false,
-	},
 	optimization: {
 		runtimeChunk: 'single',
 	},
-	mode: 'development',
 };

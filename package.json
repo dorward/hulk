@@ -5,9 +5,8 @@
 	"homepage": "https://dorward.github.io/hulk",
 	"private": true,
 	"scripts": {
-		"watch": "webpack --watch",
-		"start": "webpack serve --open",
-		"build": "webpack",
+		"start": "webpack serve --open --config webpack.dev.js",
+		"build": "webpack --config webpack.prod.js",
 		"predeploy": "npm run build",
 		"deploy": "gh-pages -d dist"
 	},
@@ -30,7 +29,8 @@
 		"typescript": "^4.6.4",
 		"webpack": "^5.72.1",
 		"webpack-cli": "^4.9.2",
-		"webpack-dev-server": "^4.9.0"
+		"webpack-dev-server": "^4.9.0",
+		"webpack-merge": "^5.8.0"
 	},
 	"dependencies": {
 		"react": "^18.1.0",
