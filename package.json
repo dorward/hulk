@@ -6,7 +6,8 @@
 	"private": true,
 	"scripts": {
 		"start": "webpack serve --open --config webpack.dev.js",
-		"build": "webpack --config webpack.prod.js",
+		"clean": "rimraf dist",
+		"build": "npm run clean && webpack --config webpack.prod.js",
 		"predeploy": "npm run build",
 		"deploy": "gh-pages -d dist"
 	},
@@ -25,6 +26,7 @@
 		"babel-loader": "^8.2.5",
 		"gh-pages": "^3.2.3",
 		"html-webpack-plugin": "^5.5.0",
+		"rimraf": "^3.0.2",
 		"ts-loader": "^9.3.0",
 		"typescript": "^4.6.4",
 		"webpack": "^5.72.1",
