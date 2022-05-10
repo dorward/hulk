@@ -26,7 +26,7 @@ module.exports = {
 	},
 	plugins: [
 		new HtmlWebpackPlugin({
-			title: 'Five Rooms In Space',
+			title: 'Hulk',
 		}),
 		// Plugin for hot module replacement
 		new webpack.HotModuleReplacementPlugin(),
