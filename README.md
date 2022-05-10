@@ -2,6 +2,10 @@
 
 Hulk is an experiment in [Ink by Inkle](https://www.inklestudios.com/ink/).
 
+It is in the early stages of development (it hasn't even reached the proof of concept state) so don't expect too much yet.
+
+A production build can be seen at [https://dorward.github.io/hulk/](https://dorward.github.io/hulk/).
+
 ## Installation
 
 Check the code out from Git.
