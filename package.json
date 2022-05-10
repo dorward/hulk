@@ -22,6 +22,7 @@
 		"@types/md5": "^2.3.2",
 		"@types/react": "^18.0.9",
 		"@types/react-dom": "^18.0.3",
+		"@types/styled-components": "^5.1.25",
 		"@types/webpack": "^5.28.0",
 		"@types/webpack-dev-server": "^4.7.2",
 		"babel-loader": "^8.2.5",
@@ -41,6 +42,7 @@
 		"md5": "^2.3.0",
 		"react": "^18.1.0",
 		"react-dom": "^18.1.0",
-		"react-redux": "^8.0.1"
+		"react-redux": "^8.0.1",
+		"styled-components": "^5.3.5"
 	}
 }
