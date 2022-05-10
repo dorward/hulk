@@ -6,7 +6,7 @@ import useInk from './ink/useInk';
 const App = () => {
 	const contentState = useSelector((state: RootState) => state.content);
 	const choicesState = useSelector((state: RootState) => state.choices);
-	useInk();
+	const { choose } = useInk();
 
 	return (
 		<>
@@ -18,7 +18,9 @@ const App = () => {
 			</div>
 			<div id="choices">
 				{choicesState.choices.map(choice => (
-					<button>{choice.text}</button>
+					<button key={choice.index} onClick={() => choose(choice.index)}>
+						{choice.text}
+					</button>
 				))}
 			</div>
 		</>
