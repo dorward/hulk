@@ -1,7 +1,8 @@
-import React from 'react';
 import { useSelector } from 'react-redux';
 import { ThemeProvider } from 'styled-components';
 
+import Dice from './components/Dice';
+import Story from './components/Story';
 import Wrapper from './components/Wrapper';
 import useInk from './ink/useInk';
 import { RootState } from './store';
@@ -17,11 +18,12 @@ const App = () => {
 			<GlobalStyle />
 			<Wrapper>
 				<h1>Hulk</h1>
-				<div id="story">
-					{state.content.map((content) => (
+				<Dice />
+				<Story>
+					{state.content.slice(-10).map((content) => (
 						<p key={content.index}>{content.text}</p>
 					))}
-				</div>
+				</Story>
 				<div id="choices">
 					{state.choices.map((choice) => (
 						<button
