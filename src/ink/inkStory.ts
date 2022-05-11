@@ -1,6 +1,4 @@
-import data from '../../hulk.ink.json';
-console.log({ data });
+import { storyContent } from '../hulk.ink';
 import * as Inkjs from 'inkjs';
-console.log({ Inkjs });
-const inkStory = new Inkjs.Story(data);
+const inkStory = new Inkjs.Story(storyContent);
 export default inkStory;

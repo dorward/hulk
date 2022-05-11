@@ -9,6 +9,14 @@ module.exports = {
 	module: {
 		rules: [
 			{
+				test: /\.ink$/,
+				use: [
+					{
+						loader: require.resolve('inklecate-loader'),
+					},
+				],
+			},
+			{
 				test: /\.(ts|js)x?$/,
 				exclude: /node_modules/,
 				use: {
