@@ -6,8 +6,8 @@ const Wrapper = styled.div`
 	min-height: 100vh;
 	margin: 0 auto;
 	padding: 0 3px;
-	background: ${p => p.theme.darkBold};
-	color: ${p => p.theme.lightSoft};
+	background: ${(p) => p.theme.darkBold};
+	color: ${(p) => p.theme.lightSoft};
 	display: flex;
 	flex-direction: column;
 `;

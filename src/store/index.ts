@@ -1,9 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit';
-import content from './content';
-import choices from './choices';
+
+import state from './reducers';
 
 export const store = configureStore({
-	reducer: { choices, content },
+	reducer: { state },
 });
 
 export type RootState = ReturnType<typeof store.getState>;

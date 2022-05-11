@@ -2,7 +2,7 @@ import { DefaultTheme } from 'styled-components';
 
 export type ThemeType = typeof theme;
 
-const theme = {
+const theme: DefaultTheme = {
 	darkBold: '#2D5418',
 	darkSoft: '#4E6641',
 	lightSoft: '#8ABD6F',
