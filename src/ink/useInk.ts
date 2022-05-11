@@ -10,7 +10,7 @@ const updateContent = (dispatch: Dispatch<AnyAction>) => {
 	while (inkStory.canContinue) {
 		const text = inkStory.Continue();
 		if (text === null) continue; // It won't be, because we test this at the top of the while loop, but TS doesn't know that
-		dispatch(addContent({ text, index: md5(text) }));
+		dispatch(addContent({ text, index: md5(text) + new Date() }));
 		// console.log('Tags: ', inkStory.currentTags);
 	}
 	const choices: Choice[] = inkStory.currentChoices.map((choice) => {
