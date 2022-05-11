@@ -1,10 +1,11 @@
-import { Dispatch, useCallback, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { add } from '../store/content';
-import { setChoices, Choice } from '../store/choices';
-import inkStory from './inkStory';
 import { AnyAction } from '@reduxjs/toolkit';
 import md5 from 'md5';
+import { Dispatch, useCallback, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+
+import { Choice, setChoices } from '../store/choices';
+import { add } from '../store/content';
+import inkStory from './inkStory';
 
 const updateContent = (dispatch: Dispatch<AnyAction>) => {
 	while (inkStory.canContinue) {
@@ -13,7 +14,7 @@ const updateContent = (dispatch: Dispatch<AnyAction>) => {
 		dispatch(add({ text, index: md5(text) }));
 		// processTags(inkStory.currentTags);
 	}
-	const choices: Choice[] = inkStory.currentChoices.map(choice => {
+	const choices: Choice[] = inkStory.currentChoices.map((choice) => {
 		return {
 			text: choice.text,
 			index: choice.index,

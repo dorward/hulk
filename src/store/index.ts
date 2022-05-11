@@ -1,6 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
-import content from './content';
+
 import choices from './choices';
+import content from './content';
 
 export const store = configureStore({
 	reducer: { choices, content },
