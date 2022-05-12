@@ -2,6 +2,7 @@ import { StrictMode } from 'react';
 import { useSelector } from 'react-redux';
 import { ThemeProvider } from 'styled-components';
 
+import CharacterSheet from './components/CharacterSheet';
 import Dice from './components/Dice';
 import Story from './components/Story';
 import Wrapper from './components/Wrapper';
@@ -21,6 +22,7 @@ const App = () => {
 				<Wrapper>
 					<h1>Hulk</h1>
 					<Dice />
+					<CharacterSheet />
 					<Story>
 						{state.content.slice(-10).map((content) => (
 							<p key={content.index}>{content.text}</p>
