@@ -13,6 +13,7 @@ export type Choice = {
 export type Dice = {
 	a: number;
 	b: number;
+	dThree: number;
 };
 
 export interface State {
@@ -24,7 +25,7 @@ export interface State {
 const initialState: State = {
 	content: [],
 	choices: [],
-	dice: { a: 0, b: 0 },
+	dice: { a: 0, b: 0, dThree: 0 },
 };
 
 export const stateSlice = createSlice({

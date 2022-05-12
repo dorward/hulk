@@ -32,6 +32,12 @@ const useInk = () => {
 		inkStory.ObserveVariable('dice_b', (_name: string, b: number) => {
 			dispatch(setDice({ b }));
 		});
+		inkStory.ObserveVariable(
+			'dice_dThree',
+			(_name: string, dThree: number) => {
+				dispatch(setDice({ dThree }));
+			},
+		);
 	}, []);
 	useEffect(() => updateContent(dispatch), []); // Update content on initial load
 
