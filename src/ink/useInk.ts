@@ -3,7 +3,14 @@ import md5 from 'md5';
 import { Dispatch, useCallback, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { Choice, addContent, setChoices, setDice } from '../store/reducers';
+import {
+	AttributeName,
+	Choice,
+	addContent,
+	setAttribute,
+	setChoices,
+	setDice,
+} from '../store/reducers';
 import inkStory from './inkStory';
 
 const updateContent = (dispatch: Dispatch<AnyAction>) => {
@@ -38,6 +45,16 @@ const useInk = () => {
 				dispatch(setDice({ dThree }));
 			},
 		);
+
+		const attributeNames: AttributeName[] = ['skill', 'stamina', 'luck'];
+		attributeNames.forEach((name) => {
+			inkStory.ObserveVariable(
+				`attribute_${name}`,
+				(_name: string, value: number) => {
+					dispatch(setAttribute({ name, value }));
+				},
+			);
+		});
 	}, []);
 	useEffect(() => updateContent(dispatch), []); // Update content on initial load
 
