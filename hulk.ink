@@ -1,5 +1,10 @@
 VAR dice_a = 0
 VAR dice_b = 0
+VAR dice_dThree = 0
+
+VAR attribute_skill = 0
+VAR attribute_stamina = 0
+VAR attribute_luck = 0
 
 You're the lucky one.
 
@@ -10,6 +15,48 @@ Your crewmates are destined to spend the rest of their lives as slaves and victi
 You are not.
 
 The inhuman raiders picked you to escape their torture and other vices.
+
+* [Who are you, anyway?] -> character_gen_start
+
+=== character_gen_start ===
+-> character_gen_stats
+
+=== character_gen_stats ===
+-> character_gen_skill
+
+=== character_gen_skill ===
+~ dice_dThree = RANDOM(1, 3)
+~ attribute_skill = dice_dThree + 3
+
+You have a skill of 1d3+3. You have rolled {dice_dThree} giving you a skill of {attribute_skill} #highlight skill
+
+* [OK] -> character_gen_stamina
+
+
+=== character_gen_stamina ===
+
+~ dice_dThree = 0
+~ dice_a = RANDOM(1, 6)
+~ dice_b = RANDOM(1, 6)
+~ attribute_stamina = dice_a + dice_b + 12
+
+You have a stamina of 2d6+12. You have rolled {dice_a + dice_b} giving you a stamina of {attribute_stamina} #highlight stamina
+
+* [OK] -> character_gen_luck
+
+=== character_gen_luck ===
+
+~ dice_dThree = 0
+~ dice_a = RANDOM(1, 6)
+~ dice_b = 0
+~ attribute_luck = dice_a + 6
+
+You have a luck of 1d6+6. You have rolled {dice_a} giving you a luck of {attribute_luck} #highlight stamina
+
+* [OK] -> back_in_the_pod
+
+=== back_in_the_pod ===
+~ reset_dice()
 
 Three days ago, they put you in an escape pod and launched it. You're lightyears from civilisation and have 30 minutes of oxygen remaining.
 
@@ -105,3 +152,8 @@ Fin. For now.
 - else:
     ~ return true
 }
+
+=== function reset_dice() ===
+~ dice_a = 0
+~ dice_b = 0
+~ dice_dThree = 0
