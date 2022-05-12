@@ -1,3 +1,4 @@
+import { StrictMode } from 'react';
 import { useSelector } from 'react-redux';
 import { ThemeProvider } from 'styled-components';
 
@@ -16,25 +17,27 @@ const App = () => {
 	return (
 		<ThemeProvider theme={theme}>
 			<GlobalStyle />
-			<Wrapper>
-				<h1>Hulk</h1>
-				<Dice />
-				<Story>
-					{state.content.slice(-10).map((content) => (
-						<p key={content.index}>{content.text}</p>
-					))}
-				</Story>
-				<div id="choices">
-					{state.choices.map((choice) => (
-						<button
-							key={choice.index}
-							onClick={() => choose(choice.index)}
-						>
-							{choice.text}
-						</button>
-					))}
-				</div>
-			</Wrapper>
+			<StrictMode>
+				<Wrapper>
+					<h1>Hulk</h1>
+					<Dice />
+					<Story>
+						{state.content.slice(-10).map((content) => (
+							<p key={content.index}>{content.text}</p>
+						))}
+					</Story>
+					<div id="choices">
+						{state.choices.map((choice) => (
+							<button
+								key={choice.index}
+								onClick={() => choose(choice.index)}
+							>
+								{choice.text}
+							</button>
+						))}
+					</div>
+				</Wrapper>
+			</StrictMode>
 		</ThemeProvider>
 	);
 };
