@@ -21,3 +21,7 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 ## License
 
 [MIT](https://choosealicense.com/licenses/mit/)
+
+## Credits
+
+-   The list of character name prompts was generated from [Bobo's 40K Name Generator](https://snowwhitehills.blogspot.com/p/40k-name-generator.html)
