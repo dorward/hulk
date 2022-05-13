@@ -191,7 +191,11 @@ Fin. For now.
 ~ dice_dThree = 0
 
 === function select_name() ===
-~ temp selected = LIST_RANDOM(possible_names)
-~ possible_names -= selected
-~ return selected
-
+{
+    - !possible_names: // "List is empty"
+        ~ possible_names = LIST_ALL(possible_names)
+}
+    ~ temp selected = LIST_RANDOM(possible_names)
+    ~ possible_names -= selected
+    ~ return selected
+    
