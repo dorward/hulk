@@ -1,3 +1,5 @@
+LIST possible_names = (Alixce), (Bobx), (Chxuck), (Dan), (Edgar), (Franz), (Gigi)
+
 VAR dice_a = 0
 VAR dice_b = 0
 VAR dice_dThree = 0
@@ -17,27 +19,36 @@ You are not.
 
 The inhuman raiders picked you to escape their torture and other vices.
 
-* [Who are you, anyway?] -> character_gen_start
+* [Who am I, anyway?] -> character_gen_start
 
 === character_gen_start ===
 -> character_gen_name
 
-=== character_gen_name ===
+=== character_gen_name_prompt ===
 
 Everyone needs a name. What is yours?
+-> character_gen_name
 
-* Alice
-    ~ char_name = "Alice"
-    -> character_gen_stats    
-    
-* Bob
-    ~ char_name = "Bob"
-    -> character_gen_stats    
-    
-* Chuck
-    ~ char_name = "Chuck"
-    -> character_gen_stats    
+=== character_gen_name ===
 
+~ temp random_name_a = select_name()
+~ temp random_name_b = select_name()
+~ temp random_name_c = select_name()
+
+*  \ {random_name_a}
+    ~ char_name = random_name_a
+    -> character_gen_stats
+
+*  \ {random_name_b}
+    ~ char_name = random_name_b
+    -> character_gen_stats
+    
+*  \ {random_name_c}
+    ~ char_name = random_name_c
+    -> character_gen_stats  
+    
++ [None of these]
+    -> character_gen_name
 
 === character_gen_stats ===
 
@@ -178,3 +189,9 @@ Fin. For now.
 ~ dice_a = 0
 ~ dice_b = 0
 ~ dice_dThree = 0
+
+=== function select_name() ===
+~ temp selected = LIST_RANDOM(possible_names)
+~ possible_names -= selected
+~ return selected
+
