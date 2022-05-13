@@ -10,10 +10,11 @@ import {
 	setAttribute,
 	setChoices,
 	setDice,
+	setTextPrompt,
 } from '../store/reducers';
 import inkStory from './inkStory';
 
-const updateContent = (dispatch: Dispatch<AnyAction>) => {
+export const updateContent = (dispatch: Dispatch<AnyAction>) => {
 	while (inkStory.canContinue) {
 		const text = inkStory.Continue();
 		if (text === null) continue; // It won't be, because we test this at the top of the while loop, but TS doesn't know that
@@ -26,6 +27,7 @@ const updateContent = (dispatch: Dispatch<AnyAction>) => {
 			index: choice.index,
 		};
 	});
+
 	dispatch(setChoices(choices));
 };
 
@@ -55,6 +57,14 @@ const useInk = () => {
 				},
 			);
 		});
+
+		inkStory.BindExternalFunction(
+			'text_prompt',
+			(var_name: string, message: string, next_knot: string) => {
+				dispatch(setTextPrompt({ var_name, message, next_knot }));
+			},
+			false,
+		);
 	}, []);
 	useEffect(() => updateContent(dispatch), []); // Update content on initial load
 

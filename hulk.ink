@@ -1,3 +1,4 @@
+EXTERNAL text_prompt(variable, message, next_knot)
 LIST possible_names = (Aajz), (Acastian), (Acastus), (Agnathio), (Alexa), (Amice), (Amuto), (Anagar), (Andrus), (Apollon), (Arrven), (Astrix), (Bannus), (Barrgus), (Belarius), (Bhangleo), (Bitterchain), (Blitz), (Boreas), (Cainsil), (Caldimus), (Cassus), (Castivar), (Castus), (Caul), (Chronus), (Coldfire), (Cottle), (Cowl), (Crow), (Cyclas), (Cyclelos), (Dagged), (Danithor), (Darnath), (Diektrik), (Dolf), (Donatelus), (Dorrghun), (Dysorius), (Erasmus), (Erik), (Eustace), (Fernand), (Gaius), (Gann), (Garadon), (Garak), (Gatughan), (Ghol), (Ghork), (Ghorrean), (Gloom), (Gonk), (Gorrloch), (Grendel), (Groff), (Gunnar), (Haerana), (Hagen), (Hardfist), (Heisen), (Ironaxe), (Ishmael), (Jaghol), (Jago), (Javier), (Jawgor), (Jean), (Jones), (Jurgah), (Kaagos), (Kadena), (Kaed), (Kandakh), (Kantor), (Klayde), (Koen), (Korvaan), (Korvaedyn), (Kulghu), (Kyrin), (Laars), (Larz), (Lefo), (Leif), (Lexandro), (Lydus), (Lytanus), (Mandoth), (Mankle), (Marcus), (Marius), (Markov), (Marqol), (Matteo), (Mendoza), (Mirage), (Mithrha), (Mologhai), (Moradus), (Mordelai), (Moriar), (Morlaeo), (Morrelis), (Mylinnax), (Neabelle), (Nereus), (Nicodemus), (Nixorem), (Obidiah), (Ordaris), (Persophie), (Phase), (Polux), (Punker), (Raelyn), (Rafael), (Ramona), (Raneil), (Rauth), (Reszan), (Rox), (Saghari), (Sargo), (Seglei), (Selig), (Seraphan), (Shadow), (Shyrth), (Solaq), (Stoneshield), (Stormstrider), (Suberei), (Svard), (Swan), (Tarentus), (Terrek), (Thal), (Thunderhowl), (Tippet), (Titus), (Torvaec), (Traegus), (Trollbane), (Ulzcha), (Una), (Vaanes), (Varenus), (Varrox), (Vorg), (Vykus), (Vylkur), (Wardecors), (Wyrmslayer), (Xeriis), (Yesuberei), (Yonda), (Yvarin), (Zed)
 
 VAR dice_a = 0
@@ -34,6 +35,7 @@ Everyone needs a name. What is yours?
 ~ temp random_name_a = select_name()
 ~ temp random_name_b = select_name()
 ~ temp random_name_c = select_name()
+~ text_prompt("char_name", "I know! It is", "character_gen_stats")
 
 *  \ {random_name_a}
     ~ char_name = random_name_a
@@ -46,9 +48,10 @@ Everyone needs a name. What is yours?
 *  \ {random_name_c}
     ~ char_name = random_name_c
     -> character_gen_stats  
-    
+
 + [None of these]
     -> character_gen_name
+
 
 === character_gen_stats ===
 
@@ -198,4 +201,7 @@ Fin. For now.
     ~ temp selected = LIST_RANDOM(possible_names)
     ~ possible_names -= selected
     ~ return selected
+    
+==== function text_prompt(variable, message, next_knot) ===
+    ~ return 1  
     
