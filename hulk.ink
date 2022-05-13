@@ -5,6 +5,7 @@ VAR dice_dThree = 0
 VAR attribute_skill = 0
 VAR attribute_stamina = 0
 VAR attribute_luck = 0
+VAR char_name = ""
 
 You're the lucky one.
 
@@ -19,9 +20,29 @@ The inhuman raiders picked you to escape their torture and other vices.
 * [Who are you, anyway?] -> character_gen_start
 
 === character_gen_start ===
--> character_gen_stats
+-> character_gen_name
+
+=== character_gen_name ===
+
+Everyone needs a name. What is yours?
+
+* Alice
+    ~ char_name = "Alice"
+    -> character_gen_stats    
+    
+* Bob
+    ~ char_name = "Bob"
+    -> character_gen_stats    
+    
+* Chuck
+    ~ char_name = "Chuck"
+    -> character_gen_stats    
+
 
 === character_gen_stats ===
+
+Hi, {char_name}
+
 -> character_gen_skill
 
 === character_gen_skill ===
