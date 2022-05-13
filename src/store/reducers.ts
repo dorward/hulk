@@ -24,11 +24,18 @@ export type Character = {
 	};
 };
 
+export type TextPrompt = {
+	var_name: string;
+	message: string;
+	next_knot: string;
+};
+
 export interface State {
 	content: Content[];
 	choices: Choice[];
 	dice: Dice;
 	character: Character;
+	textPrompt: null | TextPrompt;
 }
 
 const initialState: State = {
@@ -42,6 +49,7 @@ const initialState: State = {
 			luck: 0,
 		},
 	},
+	textPrompt: null,
 };
 
 export type AttributeUpdate = {
@@ -66,9 +74,12 @@ export const stateSlice = createSlice({
 			const { name, value } = action.payload;
 			state.character.attributes[name] = value;
 		},
+		setTextPrompt: (state, action: PayloadAction<TextPrompt | null>) => {
+			state.textPrompt = action.payload;
+		},
 	},
 });
 
-export const { addContent, setChoices, setDice, setAttribute } =
+export const { addContent, setChoices, setDice, setAttribute, setTextPrompt } =
 	stateSlice.actions;
 export default stateSlice.reducer;

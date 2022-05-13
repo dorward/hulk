@@ -5,6 +5,7 @@ import { ThemeProvider } from 'styled-components';
 import CharacterSheet from './components/CharacterSheet';
 import Dice from './components/Dice';
 import Story from './components/Story';
+import TextPrompt from './components/TextPrompt';
 import Wrapper from './components/Wrapper';
 import useInk from './ink/useInk';
 import { RootState } from './store';
@@ -29,6 +30,9 @@ const App = () => {
 						))}
 					</Story>
 					<div id="choices">
+						{state.textPrompt && (
+							<TextPrompt prompt={state.textPrompt} />
+						)}
 						{state.choices.map((choice) => (
 							<button
 								key={choice.index}
