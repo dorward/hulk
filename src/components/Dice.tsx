@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import { RootState } from '../store';
 
-const DiceContainer = styled.div`
+export const DiceContainer = styled.div`
 	&:not(:empty) {
 		border: solid ${(p) => p.theme.lightBold} 1px;
 	}

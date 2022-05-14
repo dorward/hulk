@@ -1,4 +1,5 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+import { v4 as uuidv4 } from 'uuid';
 
 export type Content = {
 	text: string;
@@ -22,6 +23,7 @@ export type Character = {
 	attributes: {
 		[K in AttributeName]: number;
 	};
+	name: string;
 };
 
 export type TextPrompt = {
@@ -48,6 +50,7 @@ const initialState: State = {
 			stamina: 0,
 			luck: 0,
 		},
+		name: '',
 	},
 	textPrompt: null,
 };
@@ -61,8 +64,9 @@ export const stateSlice = createSlice({
 	name: 'state',
 	initialState,
 	reducers: {
-		addContent: (state, action: PayloadAction<Content>) => {
-			state.content.push(action.payload);
+		addContent: (state, action: PayloadAction<Pick<Content, 'text'>>) => {
+			const content = { ...action.payload, index: uuidv4() };
+			state.content.push(content);
 		},
 		setChoices: (state, action: PayloadAction<Choice[]>) => {
 			state.choices = action.payload;
@@ -74,12 +78,21 @@ export const stateSlice = createSlice({
 			const { name, value } = action.payload;
 			state.character.attributes[name] = value;
 		},
+		setCharacterName: (state, action: PayloadAction<string>) => {
+			state.character.name = action.payload;
+		},
 		setTextPrompt: (state, action: PayloadAction<TextPrompt | null>) => {
 			state.textPrompt = action.payload;
 		},
 	},
 });
 
-export const { addContent, setChoices, setDice, setAttribute, setTextPrompt } =
-	stateSlice.actions;
+export const {
+	addContent,
+	setChoices,
+	setDice,
+	setAttribute,
+	setTextPrompt,
+	setCharacterName,
+} = stateSlice.actions;
 export default stateSlice.reducer;
