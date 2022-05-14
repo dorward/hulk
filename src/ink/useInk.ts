@@ -1,5 +1,4 @@
 import { AnyAction } from '@reduxjs/toolkit';
-import md5 from 'md5';
 import { Dispatch, useCallback, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
@@ -8,6 +7,7 @@ import {
 	Choice,
 	addContent,
 	setAttribute,
+	setCharacterName,
 	setChoices,
 	setDice,
 	setTextPrompt,
@@ -18,7 +18,7 @@ export const updateContent = (dispatch: Dispatch<AnyAction>) => {
 	while (inkStory.canContinue) {
 		const text = inkStory.Continue();
 		if (text === null) continue; // It won't be, because we test this at the top of the while loop, but TS doesn't know that
-		dispatch(addContent({ text, index: md5(text) + new Date() }));
+		dispatch(addContent({ text }));
 		// console.log('Tags: ', inkStory.currentTags);
 	}
 	const choices: Choice[] = inkStory.currentChoices.map((choice) => {
@@ -56,6 +56,17 @@ const useInk = () => {
 				},
 			);
 		});
+
+		inkStory.ObserveVariable(
+			'char_name',
+			(_name: string, name: Map<string, string>) => {
+				dispatch(
+					setCharacterName(
+						JSON.parse(name.keys().next().value).itemName,
+					),
+				);
+			},
+		);
 
 		inkStory.BindExternalFunction(
 			'text_prompt',

@@ -9,7 +9,6 @@ export const StoryContainer = styled.div`
 
 const Story = () => {
 	const state = useSelector((state: RootState) => state.state);
-
 	return (
 		<StoryContainer>
 			{state.content.slice(-10).map((content) => (
