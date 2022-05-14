@@ -27,7 +27,6 @@ export const updateContent = (dispatch: Dispatch<AnyAction>) => {
 			index: choice.index,
 		};
 	});
-
 	dispatch(setChoices(choices));
 };
 
@@ -70,6 +69,7 @@ const useInk = () => {
 
 	const choose = useCallback((index: number) => {
 		inkStory.ChooseChoiceIndex(index);
+		dispatch(setTextPrompt(null)); // Clear a text input if we have one
 		updateContent(dispatch);
 	}, []);
 	return { choose };
