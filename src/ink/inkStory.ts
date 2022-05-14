@@ -1,6 +1,6 @@
 import * as Inkjs from 'inkjs';
 
-import data from '../../hulk.ink.json';
+import data from '../../hulk.ink';
 
-const inkStory = new Inkjs.Story(data);
+const inkStory = new Inkjs.Compiler(data).Compile();
 export default inkStory;
