@@ -4,7 +4,17 @@ import styled from 'styled-components';
 import { RootState } from '../store';
 import { Character } from '../store/reducers';
 
-export const CharacterSheetContainer = styled.div``;
+export const CharacterSheetContainer = styled.div`
+	table {
+		width: 100%;
+		border-spacing: 6px 3px;
+		th {
+			text-transform: capitalize;
+			text-align: right;
+			width: 50%;
+		}
+	}
+`;
 
 type AttributesProps = Pick<Character, 'attributes'>;
 
