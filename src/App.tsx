@@ -24,11 +24,7 @@ const App = () => {
 					<h1>Hulk</h1>
 					<Dice />
 					<CharacterSheet />
-					<Story>
-						{state.content.slice(-10).map((content) => (
-							<p key={content.index}>{content.text}</p>
-						))}
-					</Story>
+					<Story />
 					<div id="choices">
 						{state.textPrompt && (
 							<TextPrompt prompt={state.textPrompt} />
