@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { RootState } from '../store';
 import TextPrompt from './TextPrompt';
 
-const ChoicesContainer = styled.div``;
+export const ChoicesContainer = styled.div``;
 
 type Props = {
 	choose(index: number): void;

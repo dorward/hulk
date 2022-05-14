@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import { RootState } from '../store';
 
-const StoryContainer = styled.div`
+export const StoryContainer = styled.div`
 	flex: 1 1 auto;
 `;
 

@@ -1,12 +1,15 @@
 import { useSelector } from 'react-redux';
+import styled from 'styled-components';
 
 import { RootState } from '../store';
+
+export const CharacterSheetContainer = styled.div``;
 
 const CharacterSheet = () => {
 	const character = useSelector((state: RootState) => state.state.character);
 	const { attributes } = character;
 	return (
-		<div>
+		<CharacterSheetContainer>
 			{Object.entries(attributes)
 				.filter((x) => x[1] > 0)
 				.map(([name, value]) => (
@@ -14,7 +17,7 @@ const CharacterSheet = () => {
 						{name}: {value}
 					</p>
 				))}
-		</div>
+		</CharacterSheetContainer>
 	);
 };
 
