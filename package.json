@@ -46,7 +46,7 @@
 	},
 	"dependencies": {
 		"@reduxjs/toolkit": "^1.8.1",
-		"inkjs": "^2.0.0",
+		"inkjs": "^2.1.0",
 		"md5": "^2.3.0",
 		"react": "^18.1.0",
 		"react-dom": "^18.1.0",

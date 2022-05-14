@@ -9,6 +9,10 @@ module.exports = {
 	module: {
 		rules: [
 			{
+				test: /\.ink$/i,
+				type: 'asset/source',
+			},
+			{
 				test: /\.(ts|js)x?$/,
 				exclude: /node_modules/,
 				use: {
