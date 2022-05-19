@@ -1,17 +1,15 @@
-import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 
-import { RootState } from '../store';
+import { Content } from '../store/reducers';
 
 export const StoryContainer = styled.div`
 	flex: 1 1 auto;
 `;
 
-const Story = () => {
-	const state = useSelector((state: RootState) => state.state);
+const Story = ({ content }: { content: Content[] }) => {
 	return (
 		<StoryContainer>
-			{state.content.slice(-10).map((content) => (
+			{content.slice(-10).map((content) => (
 				<p key={content.index}>{content.text}</p>
 			))}
 		</StoryContainer>

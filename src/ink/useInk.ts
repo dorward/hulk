@@ -1,89 +1,99 @@
-import { AnyAction } from '@reduxjs/toolkit';
-import { Dispatch, useCallback, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useCallback, useEffect, useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 
-import {
-	AttributeName,
-	Choice,
-	addContent,
-	setAttribute,
-	setCharacterName,
-	setChoices,
-	setDice,
-	setTextPrompt,
-} from '../store/reducers';
+import { Choice, Content } from '../store/reducers';
 import inkStory from './inkStory';
 
-export const updateContent = (dispatch: Dispatch<AnyAction>) => {
-	while (inkStory.canContinue) {
-		const text = inkStory.Continue();
-		if (text === null) continue; // It won't be, because we test this at the top of the while loop, but TS doesn't know that
-		dispatch(addContent({ text }));
-		// console.log('Tags: ', inkStory.currentTags);
-	}
-	const choices: Choice[] = inkStory.currentChoices.map((choice) => {
-		return {
-			text: choice.text,
-			index: choice.index,
-		};
-	});
-	dispatch(setChoices(choices));
-};
+function useInk<V extends string>({ variables }: { variables: V[] }) {
+	const [data, setData] = useState<Record<V, string>>(
+		() =>
+			variables.reduce(
+				(obj, key) => ({ ...obj, [key]: '' }),
+				{} as Partial<Record<V, string>>,
+			) as Record<V, string>,
+	);
+	const [content, setContent] = useState<Content[]>([]);
+	const [choices, setChoices] = useState<Choice[]>([]);
 
-const useInk = () => {
-	const dispatch = useDispatch();
+	const updateContent = () => {
+		while (inkStory.canContinue) {
+			const text = inkStory.Continue();
+			if (text === null) continue; // It won't be, because we test this at the top of the while loop, but TS doesn't know that
+			setContent((prev_content) => [
+				...prev_content,
+				{ text, index: uuidv4() },
+			]);
+			// console.log('Tags: ', inkStory.currentTags);
+		}
+		const choices: Choice[] = inkStory.currentChoices.map((choice) => {
+			return {
+				text: choice.text,
+				index: choice.index,
+			};
+		});
+		setChoices(choices);
+	};
+
 	useEffect(() => {
-		// Monitor the dice
-		inkStory.ObserveVariable('dice_a', (_name: string, a: number) => {
-			dispatch(setDice({ a }));
-		});
-		inkStory.ObserveVariable('dice_b', (_name: string, b: number) => {
-			dispatch(setDice({ b }));
-		});
-		inkStory.ObserveVariable(
-			'dice_dThree',
-			(_name: string, dThree: number) => {
-				dispatch(setDice({ dThree }));
-			},
-		);
+		const updateData = (
+			name: string,
+			source_value: string | Map<string, string> | number,
+		) => {
+			// TODO: Handle arrays when multiple values can be selected at once
+			console.log({ name, source_value, type: typeof source_value });
 
-		const attributeNames: AttributeName[] = ['skill', 'stamina', 'luck'];
-		attributeNames.forEach((name) => {
-			inkStory.ObserveVariable(
-				`attribute_${name}`,
-				(_name: string, value: number) => {
-					dispatch(setAttribute({ name, value }));
-				},
-			);
+			let value: string;
+			if (typeof source_value === 'string') value = source_value;
+			else if (typeof source_value === 'number')
+				value = `${source_value}`;
+			else if ('keys' in source_value)
+				value = JSON.parse(source_value.keys().next().value).itemName;
+			else value = `${source_value}`;
+
+			setData((prev) => ({
+				...prev,
+				[name]: value,
+			}));
+		};
+
+		variables.forEach((variable_name: string) => {
+			inkStory.ObserveVariable(variable_name, updateData);
 		});
 
-		inkStory.ObserveVariable(
-			'char_name',
-			(_name: string, name: Map<string, string>) => {
-				dispatch(
-					setCharacterName(
-						JSON.parse(name.keys().next().value).itemName,
-					),
-				);
-			},
-		);
+		// inkStory.ObserveVariable(
+		// 	'char_name',
+		// 	(_name: string, name: Map<string, string>) => {
+		// 		dispatch(
+		// 			setCharacterName(
+		// 				JSON.parse(name.keys().next().value).itemName,
+		// 			),
+		// 		);
+		// 	},
+		// );
 
 		inkStory.BindExternalFunction(
 			'text_prompt',
+			// eslint-disable-next-line @typescript-eslint/no-unused-vars
 			(var_name: string, message: string, next_knot: string) => {
-				dispatch(setTextPrompt({ var_name, message, next_knot }));
+				console.log('Todo: Bind external functions');
+				// console.log({ var_name, message, next_knot });
 			},
 			false,
 		);
+
+		// TODO Can we unbind everything when unmounted?
+		return () => {
+			/* ... */
+		};
 	}, []);
-	useEffect(() => updateContent(dispatch), []); // Update content on initial load
+	useEffect(() => updateContent(), []); // Update content on initial load
 
 	const choose = useCallback((index: number) => {
 		inkStory.ChooseChoiceIndex(index);
-		dispatch(setTextPrompt(null)); // Clear a text input if we have one
-		updateContent(dispatch);
+		// dispatch(setTextPrompt(null)); // Clear a text input if we have one
+		updateContent();
 	}, []);
-	return { choose };
-};
+	return { updateContent, choose, data, content, choices };
+}
 
 export default useInk;
