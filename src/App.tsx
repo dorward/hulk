@@ -7,10 +7,12 @@ import Dice from './components/Dice';
 import Story from './components/Story';
 import Wrapper from './components/Wrapper';
 import useInk from './ink/useInk';
+import useTextPrompt from './inkTextPrompt/useTextPrompt';
 import theme from './theme';
 import GlobalStyle from './theme/GlobalStyle';
 
 const App = () => {
+	const { textPromptInkFunction } = useTextPrompt();
 	const { choose, content, choices, data } = useInk({
 		variables: [
 			'dice_a',
@@ -21,7 +23,17 @@ const App = () => {
 			'attribute_luck',
 			'char_name',
 		],
+		functions: [
+			{
+				name: 'text_prompt',
+				function: textPromptInkFunction,
+			},
+		],
 	});
+
+	const { dice_a, dice_b } = data;
+
+	console.log({ dice_a, dice_b });
 
 	useEffect(() => {
 		console.log({ data });

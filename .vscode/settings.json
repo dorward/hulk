@@ -6,6 +6,7 @@
 		"predeploy",
 		"reduxjs",
 		"trivago",
-		"uuidv"
+		"uuidv",
+		"vars"
 	]
 }

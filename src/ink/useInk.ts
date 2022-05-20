@@ -4,7 +4,20 @@ import { v4 as uuidv4 } from 'uuid';
 import { Choice, Content } from '../store/reducers';
 import inkStory from './inkStory';
 
-function useInk<V extends string>({ variables }: { variables: V[] }) {
+type Func = {
+	name: string;
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	func(...args: any[]): void;
+	lookaheadSafe?: boolean;
+};
+
+function useInk<V extends string>({
+	variables,
+	functions,
+}: {
+	variables: V[];
+	functions: Func[];
+}) {
 	const [data, setData] = useState<Record<V, string>>(
 		() =>
 			variables.reduce(
@@ -15,7 +28,7 @@ function useInk<V extends string>({ variables }: { variables: V[] }) {
 	const [content, setContent] = useState<Content[]>([]);
 	const [choices, setChoices] = useState<Choice[]>([]);
 
-	const updateContent = () => {
+	const continueStory = () => {
 		while (inkStory.canContinue) {
 			const text = inkStory.Continue();
 			if (text === null) continue; // It won't be, because we test this at the top of the while loop, but TS doesn't know that
@@ -40,6 +53,8 @@ function useInk<V extends string>({ variables }: { variables: V[] }) {
 			source_value: string | Map<string, string> | number,
 		) => {
 			// TODO: Handle arrays when multiple values can be selected at once
+			// Check the spec for what data types are allowed
+			// Can types be used to enforce the type from the ink file?
 			console.log({ name, source_value, type: typeof source_value });
 
 			let value: string;
@@ -60,40 +75,23 @@ function useInk<V extends string>({ variables }: { variables: V[] }) {
 			inkStory.ObserveVariable(variable_name, updateData);
 		});
 
-		// inkStory.ObserveVariable(
-		// 	'char_name',
-		// 	(_name: string, name: Map<string, string>) => {
-		// 		dispatch(
-		// 			setCharacterName(
-		// 				JSON.parse(name.keys().next().value).itemName,
-		// 			),
-		// 		);
-		// 	},
-		// );
-
-		inkStory.BindExternalFunction(
-			'text_prompt',
-			// eslint-disable-next-line @typescript-eslint/no-unused-vars
-			(var_name: string, message: string, next_knot: string) => {
-				console.log('Todo: Bind external functions');
-				// console.log({ var_name, message, next_knot });
-			},
-			false,
-		);
+		functions.forEach(({ name, func, lookaheadSafe = false }) => {
+			inkStory.BindExternalFunction(name, func, lookaheadSafe);
+		});
 
 		// TODO Can we unbind everything when unmounted?
 		return () => {
 			/* ... */
 		};
 	}, []);
-	useEffect(() => updateContent(), []); // Update content on initial load
+	useEffect(() => continueStory(), []); // Update content on initial load
 
 	const choose = useCallback((index: number) => {
 		inkStory.ChooseChoiceIndex(index);
 		// dispatch(setTextPrompt(null)); // Clear a text input if we have one
-		updateContent();
+		continueStory();
 	}, []);
-	return { updateContent, choose, data, content, choices };
+	return { continueStory, choose, data, content, choices };
 }
 
 export default useInk;

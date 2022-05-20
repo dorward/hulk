@@ -4,7 +4,6 @@ import styled from 'styled-components';
 
 import { setTextPrompt } from '../../src/store/reducers';
 import inkStory from '../ink/inkStory';
-import { updateContent } from '../ink/useInk';
 import { TextPrompt as TextPromptType } from '../store/reducers';
 
 type Props = {
@@ -35,7 +34,7 @@ const TextPrompt = ({ prompt }: Props) => {
 			inkStory.variablesState.$(prompt.var_name, value);
 			dispatch(setTextPrompt(null));
 			inkStory.ChoosePathString(prompt.next_knot);
-			updateContent(dispatch);
+			// Trigger content update
 		}
 	};
 	return (
