@@ -80,16 +80,20 @@ function useInk<V extends string>({
 			inkStory.BindExternalFunction(name, func, lookaheadSafe);
 		});
 
-		// TODO Can we unbind everything when unmounted?
 		return () => {
-			/* ... */
+			variables.forEach((variable_name: string) => {
+				inkStory.RemoveVariableObserver(updateData, variable_name);
+			});
+			functions.forEach(({ name }) => {
+				inkStory.UnbindExternalFunction(name);
+			});
 		};
 	}, []);
-	useEffect(() => continueStory(), []); // Update content on initial load
+	useEffect(continueStory, []); // Update content on initial load
 
 	const choose = useCallback((index: number) => {
 		inkStory.ChooseChoiceIndex(index);
-		// dispatch(setTextPrompt(null)); // Clear a text input if we have one
+		// TODO: dispatch(setTextPrompt(null)); // Clear a text input if we have one
 		continueStory();
 	}, []);
 	return { continueStory, choose, data, content, choices, inkStory };
