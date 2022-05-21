@@ -7,7 +7,7 @@ import inkStory from './inkStory';
 type Func = {
 	name: string;
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	func(...args: any[]): void;
+	func(...args: any[]): any;
 	lookaheadSafe?: boolean;
 };
 
