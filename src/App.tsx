@@ -1,4 +1,4 @@
-import { StrictMode, useEffect } from 'react';
+import { StrictMode } from 'react';
 import { useCallback } from 'react';
 import { ThemeProvider } from 'styled-components';
 
@@ -18,7 +18,7 @@ const App = () => {
 		textPromptEventHandlerFactory,
 		textPromptData,
 	} = useTextPrompt();
-	const { choose, content, choices, data, continueStory, inkStory } = useInk({
+	const { choose, content, choices, continueStory, inkStory } = useInk({
 		variables: [
 			'dice_a',
 			'dice_b',
@@ -42,14 +42,6 @@ const App = () => {
 		}),
 		[textPromptEventHandlerFactory, inkStory, continueStory],
 	);
-	const { dice_a, dice_b } = data;
-
-	console.log({ dice_a, dice_b });
-
-	useEffect(() => {
-		console.log({ data });
-	}, [data]);
-
 	return (
 		<ThemeProvider theme={theme}>
 			<GlobalStyle />

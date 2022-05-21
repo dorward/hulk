@@ -5,7 +5,14 @@ module.exports = {
 		commonjs: true,
 		es2021: true,
 	},
+	rules: {
+		'no-console': ['error', { allow: ['info'] }],
+	},
 	parser: '@typescript-eslint/parser',
 	plugins: ['@typescript-eslint'],
-	extends: ['eslint:recommended', 'prettier', 'plugin:@typescript-eslint/recommended'],
+	extends: [
+		'eslint:recommended',
+		'prettier',
+		'plugin:@typescript-eslint/recommended',
+	],
 };

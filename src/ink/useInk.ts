@@ -55,8 +55,6 @@ function useInk<V extends string>({
 			// TODO: Handle arrays when multiple values can be selected at once
 			// Check the spec for what data types are allowed
 			// Can types be used to enforce the type from the ink file?
-			console.log({ name, source_value, type: typeof source_value });
-
 			let value: string;
 			if (typeof source_value === 'string') value = source_value;
 			else if (typeof source_value === 'number')
