@@ -1,8 +1,8 @@
-import { useCallback, useEffect, useState } from 'react';
+import * as Inkjs from 'inkjs';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
 import { Choice, Content } from '../store/reducers';
-import inkStory from './inkStory';
 
 type Func = {
 	name: string;
@@ -12,12 +12,15 @@ type Func = {
 };
 
 function useInk<V extends string>({
+	ink,
 	variables,
 	functions,
 }: {
+	ink: string;
 	variables: V[];
 	functions: Func[];
 }) {
+	const inkStory = useMemo(() => new Inkjs.Compiler(ink).Compile(), [ink]);
 	const [data, setData] = useState<Record<V, string>>(
 		() =>
 			variables.reduce(

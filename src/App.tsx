@@ -2,6 +2,7 @@ import { StrictMode } from 'react';
 import { useCallback } from 'react';
 import { ThemeProvider } from 'styled-components';
 
+import rawInk from '../hulk.ink';
 import CharacterSheet from './components/CharacterSheet';
 import Choices from './components/Choices';
 import Dice from './components/Dice';
@@ -19,6 +20,7 @@ const App = () => {
 		textPromptData,
 	} = useTextPrompt();
 	const { choose, content, choices, continueStory, inkStory } = useInk({
+		ink: rawInk,
 		variables: [
 			'dice_a',
 			'dice_b',
