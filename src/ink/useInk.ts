@@ -91,7 +91,7 @@ function useInk<V extends string>({
 		// dispatch(setTextPrompt(null)); // Clear a text input if we have one
 		continueStory();
 	}, []);
-	return { continueStory, choose, data, content, choices };
+	return { continueStory, choose, data, content, choices, inkStory };
 }
 
 export default useInk;

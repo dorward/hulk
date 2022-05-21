@@ -1,4 +1,5 @@
 import { StrictMode, useEffect } from 'react';
+import { useCallback } from 'react';
 import { ThemeProvider } from 'styled-components';
 
 import CharacterSheet from './components/CharacterSheet';
@@ -12,8 +13,12 @@ import theme from './theme';
 import GlobalStyle from './theme/GlobalStyle';
 
 const App = () => {
-	const { textPromptInkFunction } = useTextPrompt();
-	const { choose, content, choices, data } = useInk({
+	const {
+		textPromptInkFunction,
+		textPromptEventHandlerFactory,
+		textPromptData,
+	} = useTextPrompt();
+	const { choose, content, choices, data, continueStory, inkStory } = useInk({
 		variables: [
 			'dice_a',
 			'dice_b',
@@ -26,11 +31,17 @@ const App = () => {
 		functions: [
 			{
 				name: 'text_prompt',
-				function: textPromptInkFunction,
+				func: textPromptInkFunction,
 			},
 		],
 	});
-
+	const textPromptEventHandler = useCallback(
+		textPromptEventHandlerFactory({
+			inkStory,
+			continueStory,
+		}),
+		[textPromptEventHandlerFactory, inkStory, continueStory],
+	);
 	const { dice_a, dice_b } = data;
 
 	console.log({ dice_a, dice_b });
@@ -48,7 +59,12 @@ const App = () => {
 					<Dice />
 					<CharacterSheet />
 					<Story content={content} />
-					<Choices choose={choose} choices={choices} />
+					<Choices
+						choose={choose}
+						choices={choices}
+						textPrompt={textPromptData}
+						textPromptEventHandler={textPromptEventHandler}
+					/>
 				</Wrapper>
 			</StrictMode>
 		</ThemeProvider>

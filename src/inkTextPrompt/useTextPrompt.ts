@@ -1,7 +1,7 @@
 import { Story } from 'inkjs/engine/Story';
 import { useState } from 'react';
 
-type TextPromptData = {
+export type TextPromptDataType = {
 	var_name: string;
 	message: string;
 	next_knot: string;
@@ -9,13 +9,11 @@ type TextPromptData = {
 
 type HandlerProps = {
 	inkStory: Story;
-	continueStory(): null;
+	continueStory(): void;
 };
 
 const useTextPrompt = () => {
-	const [textPromptData, setTextPromptData] = useState<TextPromptData | null>(
-		null,
-	);
+	const [textPromptData, setTextPromptData] = useState<TextPromptDataType>();
 
 	const textPromptInkFunction = (
 		var_name: string,
@@ -36,7 +34,7 @@ const useTextPrompt = () => {
 			) {
 				inkStory.variablesState.$(textPromptData.var_name, value);
 				inkStory.ChoosePathString(textPromptData.next_knot);
-				setTextPromptData(null);
+				setTextPromptData(undefined);
 				continueStory();
 			}
 		};

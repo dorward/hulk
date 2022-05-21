@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 
+import { TextPromptDataType } from '../inkTextPrompt/useTextPrompt';
 import { Choice } from '../store/reducers';
-
-// import TextPrompt from './TextPrompt';
+import TextPrompt from './TextPrompt';
 
 export const ChoicesContainer = styled.ul`
 	list-style: none;
@@ -29,16 +29,26 @@ const Item = styled.li`
 type Props = {
 	choose(index: number): void;
 	choices: Choice[];
+	textPrompt?: TextPromptDataType;
+	textPromptEventHandler: React.KeyboardEventHandler<HTMLInputElement>;
 };
 
-const Choices = ({ choose, choices }: Props) => {
+const Choices = ({
+	choose,
+	choices,
+	textPrompt,
+	textPromptEventHandler,
+}: Props) => {
 	return (
 		<ChoicesContainer>
-			{/* {state.textPrompt && (
+			{textPrompt && (
 				<Item>
-					<TextPrompt prompt={state.textPrompt} />
+					<TextPrompt
+						data={textPrompt}
+						onKeyPress={textPromptEventHandler}
+					/>
 				</Item>
-			)} */}
+			)}
 			{choices.map((choice) => (
 				<Item key={choice.index}>
 					<button onClick={() => choose(choice.index)}>

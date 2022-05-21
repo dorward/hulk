@@ -1,13 +1,11 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 
-import { setTextPrompt } from '../../src/store/reducers';
-import inkStory from '../ink/inkStory';
-import { TextPrompt as TextPromptType } from '../store/reducers';
+import { TextPromptDataType } from '../inkTextPrompt/useTextPrompt';
 
 type Props = {
-	prompt: TextPromptType;
+	data: TextPromptDataType;
+	onKeyPress: React.KeyboardEventHandler<HTMLInputElement>;
 };
 
 const TextPromptContainer = styled.div`
@@ -26,21 +24,11 @@ const TextPromptContainer = styled.div`
 	}
 `;
 
-const TextPrompt = ({ prompt }: Props) => {
-	const dispatch = useDispatch();
-	const handler = (event: React.KeyboardEvent) => {
-		const { value } = event.currentTarget as HTMLInputElement;
-		if (event.key === 'Enter' && !value.match(/^\s*$/)) {
-			inkStory.variablesState.$(prompt.var_name, value);
-			dispatch(setTextPrompt(null));
-			inkStory.ChoosePathString(prompt.next_knot);
-			// Trigger content update
-		}
-	};
+const TextPrompt = ({ data, onKeyPress }: Props) => {
 	return (
 		<TextPromptContainer>
-			<label htmlFor="textPrompt">{prompt.message}</label>
-			<input id="textPrompt" onKeyPress={handler} />
+			<label htmlFor="textPrompt">{data.message}</label>
+			<input id="textPrompt" onKeyPress={onKeyPress} />
 		</TextPromptContainer>
 	);
 };
