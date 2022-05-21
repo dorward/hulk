@@ -28,8 +28,8 @@ function useInk<V extends string>({
 		() =>
 			variables.reduce(
 				(obj, key) => ({ ...obj, [key]: undefined }),
-				{} as Partial<Record<V, string>>,
-			) as Record<V, string>,
+				{} as Partial<Record<V, InkDataType>>,
+			) as Record<V, InkDataType>,
 	);
 	const [content, setContent] = useState<Content[]>([]);
 	const [choices, setChoices] = useState<Choice[]>([]);
