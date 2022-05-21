@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 import { TextPromptDataType } from '../inkTextPrompt/useTextPrompt';
-import { Choice } from '../store/reducers';
+import { Choice } from '../types';
 import TextPrompt from './TextPrompt';
 
 export const ChoicesContainer = styled.ul`

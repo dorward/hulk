@@ -12,6 +12,7 @@ import useInk from './ink/useInk';
 import useTextPrompt from './inkTextPrompt/useTextPrompt';
 import theme from './theme';
 import GlobalStyle from './theme/GlobalStyle';
+import { Character } from './types';
 
 const App = () => {
 	const {
@@ -44,14 +45,23 @@ const App = () => {
 		}),
 		[textPromptEventHandlerFactory, inkStory, continueStory],
 	);
+	const character: Character = {
+		name: 'placeholder',
+		attributes: {
+			skill: 1,
+			luck: 1,
+			stamina: 1,
+		},
+	};
+
 	return (
 		<ThemeProvider theme={theme}>
 			<GlobalStyle />
 			<StrictMode>
 				<Wrapper>
 					<h1>Hulk</h1>
-					<Dice />
-					<CharacterSheet />
+					<Dice a={1} b={2} dThree={3} />
+					<CharacterSheet character={character} />
 					<Story content={content} />
 					<Choices
 						choose={choose}

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { Content } from '../store/reducers';
+import { Content } from '../types';
 
 export const StoryContainer = styled.div`
 	flex: 1 1 auto;

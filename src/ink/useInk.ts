@@ -2,7 +2,7 @@ import * as Inkjs from 'inkjs';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
-import { Choice, Content } from '../store/reducers';
+import { Choice, Content } from '../types';
 
 type Func = {
 	name: string;

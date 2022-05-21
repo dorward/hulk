@@ -46,11 +46,9 @@
 		"webpack-merge": "^5.8.0"
 	},
 	"dependencies": {
-		"@reduxjs/toolkit": "^1.8.1",
 		"inkjs": "^2.1.0",
 		"react": "^18.1.0",
 		"react-dom": "^18.1.0",
-		"react-redux": "^8.0.1",
 		"styled-components": "^5.3.5",
 		"uuid": "^8.3.2"
 	}
