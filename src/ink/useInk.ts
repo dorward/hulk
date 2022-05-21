@@ -83,7 +83,6 @@ function useInk<V extends string>({
 
 	const choose = useCallback((index: number) => {
 		inkStory.ChooseChoiceIndex(index);
-		// TODO: dispatch(setTextPrompt(null)); // Clear a text input if we have one
 		continueStory();
 	}, []);
 	return { continueStory, choose, data, content, choices, inkStory };

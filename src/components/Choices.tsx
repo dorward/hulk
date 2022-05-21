@@ -31,6 +31,7 @@ type Props = {
 	choices: Choice[];
 	textPrompt?: TextPromptDataType;
 	textPromptEventHandler: React.KeyboardEventHandler<HTMLInputElement>;
+	clearTextPrompt(): void;
 };
 
 const Choices = ({
@@ -38,6 +39,7 @@ const Choices = ({
 	choices,
 	textPrompt,
 	textPromptEventHandler,
+	clearTextPrompt,
 }: Props) => {
 	return (
 		<ChoicesContainer>
@@ -51,7 +53,12 @@ const Choices = ({
 			)}
 			{choices.map((choice) => (
 				<Item key={choice.index}>
-					<button onClick={() => choose(choice.index)}>
+					<button
+						onClick={() => {
+							clearTextPrompt();
+							choose(choice.index);
+						}}
+					>
 						{choice.text}
 					</button>
 				</Item>

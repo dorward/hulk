@@ -19,6 +19,7 @@ const App = () => {
 		textPromptInkFunction,
 		textPromptEventHandlerFactory,
 		textPromptData,
+		clearTextPrompt,
 	} = useTextPrompt();
 	const { choose, content, choices, continueStory, inkStory, data } = useInk({
 		ink: rawInk,
@@ -76,6 +77,7 @@ const App = () => {
 						choices={choices}
 						textPrompt={textPromptData}
 						textPromptEventHandler={textPromptEventHandler}
+						clearTextPrompt={clearTextPrompt}
 					/>
 				</Wrapper>
 			</StrictMode>
