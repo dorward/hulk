@@ -1,7 +1,4 @@
-import { useSelector } from 'react-redux';
 import styled from 'styled-components';
-
-import { RootState } from '../store';
 
 export const DiceContainer = styled.div`
 	&:not(:empty) {
@@ -29,18 +26,23 @@ const Die = styled.div<DieProps>`
 	color: ${(p) => (p.size === 6 ? 'black' : 'white')};
 `;
 
-const Dice = () => {
-	const state = useSelector((state: RootState) => state.state.dice);
+type Props = {
+	a?: number;
+	b?: number;
+	dThree?: number;
+};
+
+const Dice = ({ a, b, dThree }: Props) => {
 	const values = [
-		{ size: 6, value: state.a },
-		{ size: 6, value: state.b },
-		{ size: 3, value: state.dThree },
+		{ size: 6, value: a },
+		{ size: 6, value: b },
+		{ size: 3, value: dThree },
 	];
 
 	return (
 		<DiceContainer>
 			{values
-				.filter(({ value }) => value > 0)
+				.filter(({ value }) => value)
 				.map(({ size, value }, index) => (
 					<Die key={index} size={size}>
 						{value}

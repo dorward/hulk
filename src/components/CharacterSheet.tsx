@@ -1,8 +1,6 @@
-import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 
-import { RootState } from '../store';
-import { Character } from '../store/reducers';
+import { Character } from '../types';
 
 export const CharacterSheetContainer = styled.div`
 	h2 {
@@ -18,6 +16,10 @@ export const CharacterSheetContainer = styled.div`
 		}
 	}
 `;
+
+type Props = {
+	character: Character;
+};
 
 type AttributesProps = Pick<Character, 'attributes'>;
 
@@ -38,8 +40,7 @@ const Attributes = ({ attributes }: AttributesProps) => {
 	);
 };
 
-const CharacterSheet = () => {
-	const character = useSelector((state: RootState) => state.state.character);
+const CharacterSheet = ({ character }: Props) => {
 	const { attributes, name } = character;
 	return (
 		<CharacterSheetContainer>

@@ -1,7 +1,7 @@
-import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 
-import { RootState } from '../store';
+import { TextPromptDataType } from '../inkTextPrompt/useTextPrompt';
+import { Choice } from '../types';
 import TextPrompt from './TextPrompt';
 
 export const ChoicesContainer = styled.ul`
@@ -28,21 +28,37 @@ const Item = styled.li`
 
 type Props = {
 	choose(index: number): void;
+	choices: Choice[];
+	textPrompt?: TextPromptDataType;
+	textPromptEventHandler: React.KeyboardEventHandler<HTMLInputElement>;
+	clearTextPrompt(): void;
 };
 
-const Choices = ({ choose }: Props) => {
-	const state = useSelector((state: RootState) => state.state);
-
+const Choices = ({
+	choose,
+	choices,
+	textPrompt,
+	textPromptEventHandler,
+	clearTextPrompt,
+}: Props) => {
 	return (
 		<ChoicesContainer>
-			{state.textPrompt && (
+			{textPrompt && (
 				<Item>
-					<TextPrompt prompt={state.textPrompt} />
+					<TextPrompt
+						data={textPrompt}
+						onKeyPress={textPromptEventHandler}
+					/>
 				</Item>
 			)}
-			{state.choices.map((choice) => (
+			{choices.map((choice) => (
 				<Item key={choice.index}>
-					<button onClick={() => choose(choice.index)}>
+					<button
+						onClick={() => {
+							clearTextPrompt();
+							choose(choice.index);
+						}}
+					>
 						{choice.text}
 					</button>
 				</Item>

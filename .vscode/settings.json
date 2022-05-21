@@ -5,7 +5,9 @@
 		"monospace",
 		"predeploy",
 		"reduxjs",
+		"superstruct",
 		"trivago",
-		"uuidv"
+		"uuidv",
+		"vars"
 	]
 }
