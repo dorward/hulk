@@ -80,6 +80,8 @@ function useInk<V extends string>({
 			inkStory.BindExternalFunction(name, func, lookaheadSafe);
 		});
 
+		continueStory();
+
 		return () => {
 			variables.forEach((variable_name: string) => {
 				inkStory.RemoveVariableObserver(updateData, variable_name);
@@ -89,7 +91,6 @@ function useInk<V extends string>({
 			});
 		};
 	}, []);
-	useEffect(continueStory, []); // Update content on initial load
 
 	const choose = useCallback((index: number) => {
 		inkStory.ChooseChoiceIndex(index);
