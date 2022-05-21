@@ -6,7 +6,7 @@ module.exports = {
 		es2021: true,
 	},
 	rules: {
-		'no-console': ['error', { allow: ['info'] }],
+		'no-console': ['error', { allow: ['info', 'error'] }],
 	},
 	parser: '@typescript-eslint/parser',
 	plugins: ['@typescript-eslint'],
