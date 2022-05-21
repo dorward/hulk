@@ -4,8 +4,8 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { Choice, Content } from '../types';
 
-export type InkDataType = string | Map<string, string> | number;
-export type ExportedDataTypes = string | number;
+export type InkListType = Map<string, string>;
+export type InkDataType = string | number | InkListType;
 
 type Func = {
 	name: string;
@@ -24,10 +24,10 @@ function useInk<V extends string>({
 	functions: Func[];
 }) {
 	const inkStory = useMemo(() => new Inkjs.Compiler(ink).Compile(), [ink]);
-	const [data, setData] = useState<Record<V, ExportedDataTypes>>(
+	const [data, setData] = useState<Record<V, InkDataType>>(
 		() =>
 			variables.reduce(
-				(obj, key) => ({ ...obj, [key]: '' }),
+				(obj, key) => ({ ...obj, [key]: undefined }),
 				{} as Partial<Record<V, string>>,
 			) as Record<V, string>,
 	);
@@ -54,17 +54,7 @@ function useInk<V extends string>({
 	};
 
 	useEffect(() => {
-		const updateData = (name: string, source_value: InkDataType) => {
-			// TODO: Handle arrays when multiple values can be selected at once
-			// Check the spec for what data types are allowed
-			// Can types be used to enforce the type from the ink file?
-			let value: ExportedDataTypes;
-			if (['string', 'number'].includes(typeof source_value))
-				value = source_value as ExportedDataTypes;
-			else if ('keys' in source_value)
-				value = JSON.parse(source_value.keys().next().value).itemName;
-			else value = `${source_value}`;
-
+		const updateData = (name: string, value: InkDataType) => {
 			setData((prev) => ({
 				...prev,
 				[name]: value,

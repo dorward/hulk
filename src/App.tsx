@@ -12,7 +12,7 @@ import useInk from './ink/useInk';
 import useTextPrompt from './inkTextPrompt/useTextPrompt';
 import theme from './theme';
 import GlobalStyle from './theme/GlobalStyle';
-import { Character } from './types';
+import { Character, isValid } from './types';
 
 const App = () => {
 	const {
@@ -20,7 +20,7 @@ const App = () => {
 		textPromptEventHandlerFactory,
 		textPromptData,
 	} = useTextPrompt();
-	const { choose, content, choices, continueStory, inkStory } = useInk({
+	const { choose, content, choices, continueStory, inkStory, data } = useInk({
 		ink: rawInk,
 		variables: [
 			'dice_a',
@@ -38,6 +38,9 @@ const App = () => {
 			},
 		],
 	});
+	if (!isValid(data)) {
+		throw new Error('Data from ink does not match schema');
+	}
 	const textPromptEventHandler = useCallback(
 		textPromptEventHandlerFactory({
 			inkStory,
@@ -46,11 +49,11 @@ const App = () => {
 		[textPromptEventHandlerFactory, inkStory, continueStory],
 	);
 	const character: Character = {
-		name: 'placeholder',
+		name: data.char_name,
 		attributes: {
-			skill: 1,
-			luck: 1,
-			stamina: 1,
+			luck: data.attribute_luck,
+			skill: data.attribute_skill,
+			stamina: data.attribute_stamina,
 		},
 	};
 
