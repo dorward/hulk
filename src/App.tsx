@@ -12,7 +12,7 @@ import useInk from './ink/useInk';
 import useTextPrompt from './inkTextPrompt/useTextPrompt';
 import theme from './theme';
 import GlobalStyle from './theme/GlobalStyle';
-import { Character, isValid } from './types';
+import { Character, InkDataStructure, isValid } from './types';
 
 const App = () => {
 	const {
@@ -41,6 +41,7 @@ const App = () => {
 	if (!isValid(data)) {
 		throw new Error('Data from ink does not match schema');
 	}
+	const inkData = data as InkDataStructure;
 	const textPromptEventHandler = useCallback(
 		textPromptEventHandlerFactory({
 			inkStory,
@@ -49,11 +50,11 @@ const App = () => {
 		[textPromptEventHandlerFactory, inkStory, continueStory],
 	);
 	const character: Character = {
-		name: data.char_name,
+		name: inkData.char_name,
 		attributes: {
-			luck: data.attribute_luck,
-			skill: data.attribute_skill,
-			stamina: data.attribute_stamina,
+			luck: inkData.attribute_luck,
+			skill: inkData.attribute_skill,
+			stamina: inkData.attribute_stamina,
 		},
 	};
 
@@ -63,7 +64,11 @@ const App = () => {
 			<StrictMode>
 				<Wrapper>
 					<h1>Hulk</h1>
-					<Dice a={1} b={2} dThree={3} />
+					<Dice
+						a={inkData.dice_a}
+						b={inkData.dice_b}
+						dThree={inkData.dice_dThree}
+					/>
 					<CharacterSheet character={character} />
 					<Story content={content} />
 					<Choices

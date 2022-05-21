@@ -16,9 +16,9 @@ export type AttributeName = 'skill' | 'stamina' | 'luck';
 
 export type Character = {
 	attributes: {
-		[K in AttributeName]: number;
+		[K in AttributeName]?: number;
 	};
-	name: string;
+	name?: string;
 };
 
 type UntestedInkDataStructure = {
@@ -31,7 +31,7 @@ type UntestedInkDataStructure = {
 	char_name: InkDataType;
 };
 
-type InkDataStructure = {
+export type InkDataStructure = {
 	dice_a?: number;
 	dice_b?: number;
 	dice_dThree?: number;
@@ -54,6 +54,12 @@ const InkDataStructureSchema = s.object({
 export const isValid = (
 	data: InkDataStructure | UntestedInkDataStructure,
 ): data is InkDataStructure => {
-	s.assert(data, InkDataStructureSchema);
-	return true;
+	try {
+		console.log({ data });
+		s.assert(data, InkDataStructureSchema);
+		return true;
+	} catch (e) {
+		console.error(e);
+		return false;
+	}
 };

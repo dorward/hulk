@@ -27,9 +27,9 @@ const Die = styled.div<DieProps>`
 `;
 
 type Props = {
-	a: number;
-	b: number;
-	dThree: number;
+	a?: number;
+	b?: number;
+	dThree?: number;
 };
 
 const Dice = ({ a, b, dThree }: Props) => {
@@ -42,7 +42,7 @@ const Dice = ({ a, b, dThree }: Props) => {
 	return (
 		<DiceContainer>
 			{values
-				.filter(({ value }) => value > 0)
+				.filter(({ value }) => value)
 				.map(({ size, value }, index) => (
 					<Die key={index} size={size}>
 						{value}
