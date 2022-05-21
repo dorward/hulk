@@ -200,7 +200,7 @@ Fin. For now.
 }
     ~ temp selected = LIST_RANDOM(possible_names)
     ~ possible_names -= selected
-    ~ return selected
+    ~ return "{selected}"
     
 ==== function text_prompt(variable, message, next_knot) ===
     ~ return 1  
