@@ -34,7 +34,7 @@ function useInk<V extends string>({
 	const [content, setContent] = useState<Content[]>([]);
 	const [choices, setChoices] = useState<Choice[]>([]);
 
-	const continueStory = () => {
+	const continueStory = useCallback(() => {
 		while (inkStory.canContinue) {
 			const text = inkStory.Continue();
 			if (text === null) continue; // It won't be, because we test this at the top of the while loop, but TS doesn't know that
@@ -51,7 +51,7 @@ function useInk<V extends string>({
 			};
 		});
 		setChoices(choices);
-	};
+	}, [inkStory]);
 
 	useEffect(() => {
 		const updateData = (name: string, value: InkDataType) => {
@@ -79,12 +79,16 @@ function useInk<V extends string>({
 				inkStory.UnbindExternalFunction(name);
 			});
 		};
-	}, []);
+	}, [continueStory, functions, inkStory, variables]);
 
-	const choose = useCallback((index: number) => {
-		inkStory.ChooseChoiceIndex(index);
-		continueStory();
-	}, []);
+	const choose = useCallback(
+		(index: number) => {
+			inkStory.ChooseChoiceIndex(index);
+			continueStory();
+		},
+		[continueStory, inkStory],
+	);
+
 	return { continueStory, choose, data, content, choices, inkStory };
 }
 

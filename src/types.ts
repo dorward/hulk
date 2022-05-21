@@ -55,7 +55,6 @@ export const isValid = (
 	data: InkDataStructure | UntestedInkDataStructure,
 ): data is InkDataStructure => {
 	try {
-		console.log({ data });
 		s.assert(data, InkDataStructureSchema);
 		return true;
 	} catch (e) {

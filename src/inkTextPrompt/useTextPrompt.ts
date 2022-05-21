@@ -40,7 +40,7 @@ const useTextPrompt = () => {
 					continueStory();
 				}
 			},
-		[],
+		[clearTextPrompt, textPromptData],
 	);
 
 	return {

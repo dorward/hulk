@@ -1,8 +1,8 @@
 import { StrictMode } from 'react';
-import { useCallback } from 'react';
+import { useMemo } from 'react';
 import { ThemeProvider } from 'styled-components';
 
-import rawInk from '../hulk.ink';
+import ink from '../hulk.ink';
 import CharacterSheet from './components/CharacterSheet';
 import Choices from './components/Choices';
 import Dice from './components/Dice';
@@ -14,6 +14,16 @@ import theme from './theme';
 import GlobalStyle from './theme/GlobalStyle';
 import { Character, InkDataStructure, isValid } from './types';
 
+const variables = [
+	'dice_a',
+	'dice_b',
+	'dice_dThree',
+	'attribute_skill',
+	'attribute_stamina',
+	'attribute_luck',
+	'char_name',
+];
+
 const App = () => {
 	const {
 		textPromptInkFunction,
@@ -21,33 +31,30 @@ const App = () => {
 		textPromptData,
 		clearTextPrompt,
 	} = useTextPrompt();
-	const { choose, content, choices, continueStory, inkStory, data } = useInk({
-		ink: rawInk,
-		variables: [
-			'dice_a',
-			'dice_b',
-			'dice_dThree',
-			'attribute_skill',
-			'attribute_stamina',
-			'attribute_luck',
-			'char_name',
-		],
-		functions: [
+	const functions = useMemo(
+		() => [
 			{
 				name: 'text_prompt',
 				func: textPromptInkFunction,
 			},
 		],
+		[textPromptInkFunction],
+	);
+	const { choose, content, choices, continueStory, inkStory, data } = useInk({
+		ink,
+		variables,
+		functions,
 	});
 	if (!isValid(data)) {
 		throw new Error('Data from ink does not match schema');
 	}
 	const inkData = data as InkDataStructure;
-	const textPromptEventHandler = useCallback(
-		textPromptEventHandlerFactory({
-			inkStory,
-			continueStory,
-		}),
+	const textPromptEventHandler = useMemo(
+		() =>
+			textPromptEventHandlerFactory({
+				inkStory,
+				continueStory,
+			}),
 		[textPromptEventHandlerFactory, inkStory, continueStory],
 	);
 	const character: Character = {
