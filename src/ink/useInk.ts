@@ -4,6 +4,9 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { Choice, Content } from '../types';
 
+export type InkDataType = string | Map<string, string> | number;
+export type ExportedDataTypes = string | number;
+
 type Func = {
 	name: string;
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -21,7 +24,7 @@ function useInk<V extends string>({
 	functions: Func[];
 }) {
 	const inkStory = useMemo(() => new Inkjs.Compiler(ink).Compile(), [ink]);
-	const [data, setData] = useState<Record<V, string>>(
+	const [data, setData] = useState<Record<V, ExportedDataTypes>>(
 		() =>
 			variables.reduce(
 				(obj, key) => ({ ...obj, [key]: '' }),
@@ -51,17 +54,13 @@ function useInk<V extends string>({
 	};
 
 	useEffect(() => {
-		const updateData = (
-			name: string,
-			source_value: string | Map<string, string> | number,
-		) => {
+		const updateData = (name: string, source_value: InkDataType) => {
 			// TODO: Handle arrays when multiple values can be selected at once
 			// Check the spec for what data types are allowed
 			// Can types be used to enforce the type from the ink file?
-			let value: string;
-			if (typeof source_value === 'string') value = source_value;
-			else if (typeof source_value === 'number')
-				value = `${source_value}`;
+			let value: ExportedDataTypes;
+			if (['string', 'number'].includes(typeof source_value))
+				value = source_value as ExportedDataTypes;
 			else if ('keys' in source_value)
 				value = JSON.parse(source_value.keys().next().value).itemName;
 			else value = `${source_value}`;
