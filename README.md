@@ -24,4 +24,4 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 
 ## Credits
 
--   The list of character name prompts was generated from [Bobo's 40K Name Generator](https://snowwhitehills.blogspot.com/p/40k-name-generator.html)
+-   The list of character name prompts was generated from [Bobo's Warhammer 40K Name Generator](https://blessedbynuffle.blogspot.com/p/40k-name-generator.html)
